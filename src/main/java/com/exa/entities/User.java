@@ -2,10 +2,21 @@ package com.exa.entities;
 
 import java.io.Serializable;
 
-// definiri Serializable quando quer q os objetos sejam transformados em cadeias de bytes pra que o objeto trafegue na rede, pra poder ser gravado em arquivos e etc.
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+// 1. definiri Serializable quando quer q os objetos sejam transformados em cadeias de bytes pra que o objeto trafegue na rede, pra poder ser gravado em arquivos e etc.
+// 2. aplicando aqui as anotações do JPA pra guia-lo em como fazer a conversao objeto-relacional
+@Entity
+@Table(name = "tb_user") // isso especifica o nome da tabela no banco de dados. É preciso fazer isso pois User é uma palavra reservada do SQL
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id // definindo a primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // definindo a estratégia de geração automática de id
     private Long id;
     private String name;
     private String email;

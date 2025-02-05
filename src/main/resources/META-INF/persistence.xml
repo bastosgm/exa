@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
+    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1"> 
+ 
+ <persistence-unit name="exemplo-jpa" transaction-type="RESOURCE_LOCAL"> 
+  <properties> 
+   <!-- URL de conexão para PostgreSQL -->
+   <property name="javax.persistence.jdbc.url"  
+   value="jdbc:postgresql://localhost:5432/aulajpa" /> 
+
+   <!-- Driver JDBC do PostgreSQL -->
+   <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> 
+
+   <!-- Usuário e senha do banco -->
+   <property name="javax.persistence.jdbc.user" value="foo" /> 
+   <property name="javax.persistence.jdbc.password" value="bar" /> 
+
+   <!-- Configuração do Hibernate -->
+   <!-- Atualiza o banco de dados conforme atualizacoes em classes de dominio -->
+   <property name="hibernate.hbm2ddl.auto" value="update" /> 
+   <!-- pode mudar de acordo com versao do postgre -->
+   <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> 
+  </properties> 
+ </persistence-unit> 
+</persistence>
