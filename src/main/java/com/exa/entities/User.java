@@ -1,11 +1,14 @@
 package com.exa.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // 1. definiri Serializable quando quer q os objetos sejam transformados em cadeias de bytes pra que o objeto trafegue na rede, pra poder ser gravado em arquivos e etc.
@@ -22,6 +25,12 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    // essa assossiation precisa ser instanciada
+    // definindo a relação de um User com várias Orders
+    // o mappedBy é pra dizer que o atributo client da classe Order é o dono da relação
+    @OneToMany(mappedBy = "client") 
+    private List<Order> orders = new ArrayList<>();
 
     // como está usando framework, é obrigado declarar construtor vazio
     public User() {
@@ -73,6 +82,11 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // collections tem apenas getters
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
