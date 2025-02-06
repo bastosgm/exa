@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +31,7 @@ public class User implements Serializable {
     // essa assossiation precisa ser instanciada
     // definindo a relação de um User com várias Orders
     // o mappedBy é pra dizer que o atributo client da classe Order é o dono da relação
+    @JsonIgnore // Evita loop infinito pela relacao de mao dupla. Se é deixado aqui, permite que User traga Orders relacionadas, mas Order não traga User relacionado
     @OneToMany(mappedBy = "client") 
     private List<Order> orders = new ArrayList<>();
 

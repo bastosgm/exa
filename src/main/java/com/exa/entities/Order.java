@@ -3,6 +3,9 @@ package com.exa.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +24,8 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // annotation do jackson pra formatar a data no formato ISO 8601
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
     // 2. criar as assossiations
@@ -30,6 +35,7 @@ public class Order implements Serializable {
     @ManyToOne
     // aplicando a annotation JoinColumn pra especificar o nome da FK no db
     @JoinColumn(name = "client_id")
+    // @JsonIgnore - Evita loop infinito pela relacao de mao dupla. Se é deixado aqui, permite que Order traga User relacionado, mas User não traga Orders relacionadas
     private User client;
 
     // 3. criar os construtores
