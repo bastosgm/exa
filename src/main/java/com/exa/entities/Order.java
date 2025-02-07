@@ -3,8 +3,9 @@ package com.exa.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.exa.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+// import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,9 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+    // aqui poderia ser do tipo OrderStatus, mas será Integer pra dizer q o valor que será gravado no db é um inteiro, porém isso é só internamente nessa classe Order, e fora dela tudo deve ser tratado como OrderStatus
+    private Integer orderStatus;
+
     // 2. criar as assossiations
     // essa primeira representa a relacao de uma order com um cliente
     // já aproveitando o momento, a outra relacao de um cliente (User) com varias orders tem que ser feita na clase User
@@ -42,9 +46,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
+        // aqui como o orderStatus que chega é do tipo OrderStatus, ao inves da assimilacao direta, precisa repassar para a funcao SetOrderStatus pra fazer orderStatus receber um valor Integer
+        setOrderStatus(orderStatus); 
         this.client = client;
     }
 
@@ -63,6 +69,16 @@ public class Order implements Serializable {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    // como order status aqui dentro é um inteiro, mas fora é um OrderStatus, tem que fazer a conversao usando o metodo valueOf da classe Enum OrderStatus
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    // aqui usa o outro metodo pra fazer o inverso, que é pegar um enum do tipo OrderStatus e pegar o codigo dele, ja que this.orderStatus é um Integer
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) this.orderStatus = orderStatus.getCode();
     }
 
     public User getClient() {
