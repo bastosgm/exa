@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.exa.entities.Category;
 import com.exa.entities.Order;
 import com.exa.entities.User;
 import com.exa.entities.enums.OrderStatus;
+import com.exa.repositories.CategoryRepository;
 import com.exa.repositories.OrderRepository;
 import com.exa.repositories.UserRepository;
 
@@ -21,15 +23,25 @@ import com.exa.repositories.UserRepository;
 // CommandLineRunner é uma interface do Spring Boot que permite executar um
 // metodo assim que a aplicacao é iniciada
 public class TestConfig implements CommandLineRunner {
-    @Autowired // injecao de dependencia automatica associando uma instancia de UserRepository
-               // aqui no TestConfig
+    // injecao de dependencia automatica associando uma instancia de UserReposito aqui no TestConfig
+    @Autowired 
     private UserRepository userRepository;
 
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
+        // pode vir primeiro aqui pq Category é uma classe independente das outras, só confirmar no diagrama UML
+        Category cat1 = new Category(null, "Electronics"); 
+        Category cat2 = new Category(null, "Books"); 
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
