@@ -8,6 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -28,7 +31,15 @@ public class Product implements Serializable {
 
     // Se um mesmo product nao pode ter mais de uma mesma categoria, logo usa-se Set
     // tem q comecar com uma instancia pra nao começar nula
-    @Transient
+    // aqui sera feita uma associacao de muitos para muitos com Product e Category (como mostra o UML), onde voce pode fazer em uma das duas entidades, no caso foi escolhido essa
+    @ManyToMany
+    @JoinTable(
+        // nome da tabela que vai fazer o meio de campo entre as duas tabelas
+        name = "tb_product_category", 
+        // chave estrangeira de product
+        joinColumns = @JoinColumn(name = "product_id"), 
+        // chave estrangeira de category
+        inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     public Product() {

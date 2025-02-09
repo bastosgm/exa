@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -22,7 +25,9 @@ public class Category implements Serializable {
     private String name;
 
     // LEmbrando que quando for collection, só se cria o getter, pois voce nao troca uma collection com set, voce adiciona ou remove
-    @Transient
+    // como foi feita a associacao la em Product, aqui é feita a referencia para o mapeamento feito em Product
+    @ManyToMany(mappedBy = "categories") // categories é o nome do atributo (Collection) em Product
+    @JsonIgnore // para evitar loop infinito
     private Set<Product> products = new HashSet<>();
 
     public Category() {
