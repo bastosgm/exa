@@ -3,6 +3,7 @@ package com.exa.entities;
 import java.io.Serializable;
 
 import com.exa.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -12,8 +13,9 @@ import jakarta.persistence.Table;
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
     // atributo idetificador correspondente a PK. Define um objeto composto como PK
+    // lembrando de criar já instanciando o objeto
     @EmbeddedId
-    private OrderItemPk id;
+    private OrderItemPk id = new OrderItemPk();
     
     private Integer quantity;
     private Double price;
@@ -31,6 +33,7 @@ public class OrderItem implements Serializable {
 
     // gerando os getters e setters de Order e Product, mesmo que não existam essas propriedades diretamente aqui, mas indiretamente por " OrderItemPk id"
     // pro externo, nao existirá um getId dessa classe, mas sim um getOrder e getProduct
+    @JsonIgnore // usado aqui pra evitar loop infinito na serializacao de Order pois esse cara é quem chama Order associado a esse OrderItem onde começa o loop
     public Order getOrder() {
         return id.getOrder();
     }
