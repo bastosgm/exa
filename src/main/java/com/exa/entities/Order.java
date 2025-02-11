@@ -115,6 +115,15 @@ public class Order implements Serializable {
         return items;
     }
 
+    // implementando o método getTotal que retorna o subTotal somado de todos os OrderItems
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
+    }
+
     // 5. criar os hashcode e equals
     @Override
     public int hashCode() {

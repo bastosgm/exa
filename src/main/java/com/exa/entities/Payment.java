@@ -3,6 +3,8 @@ package com.exa.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +25,9 @@ public class Payment implements Serializable {
     // 2. criar as associacoes (1 Order tem 1 Payment e fazer o reverso na outra classe, no caso, ORder)
     // Lembrando que segundo o diagrama, Payment é dependente de Order, pois uma Order pode entrar no db sem um Payment relacionado, o que torna Order independente de Payment
     // A assossiacao é de 1 para 1, e é feita na classe dependente, no caso, Payment
+    @JsonIgnore
     @OneToOne
-    @MapsId
+    @MapsId // pra garantir que o id de Payment seja o mesmo do Order
     private Order order;
 
     // 3. criar os construtores

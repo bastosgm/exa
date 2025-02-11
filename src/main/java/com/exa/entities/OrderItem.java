@@ -66,6 +66,12 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    // implementando método subTotal
+    // na plataforma EE, o que vale é o get, então o que for retornado no get é o que será serializado. Pra aparecer o resultado no json, é preciso criar um get
+    public double getSubTotal() {
+        return price * quantity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
