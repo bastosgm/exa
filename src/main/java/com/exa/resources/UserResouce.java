@@ -1,13 +1,17 @@
 package com.exa.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.exa.entities.User;
 import com.exa.services.UserService;
@@ -34,4 +38,17 @@ public class UserResouce {
         return ResponseEntity.ok().body(obj);
     }
 
+    @PostMapping
+    // Pra dizer que User obj vai ser um objeto json que vai ser enviado no corpo da requisicao, usa-se o @RequestBody
+    public ResponseEntity<User> insert(@RequestBody User obj) {
+        obj = service.insert(obj); // aqui se usa a dependencia que foi injetada
+        // criando o objeto do tipo URI pra retornar o endereco do novo objeto criado e servir de parametro para created()
+        URI uri = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(obj.getId())
+            .toUri();
+
+        return ResponseEntity.created(uri).body(obj);
+    }
 }
