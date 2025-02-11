@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.exa.entities.Category;
 import com.exa.entities.Order;
 import com.exa.entities.OrderItem;
+import com.exa.entities.Payment;
 import com.exa.entities.Product;
 import com.exa.entities.User;
 import com.exa.entities.enums.OrderStatus;
@@ -93,6 +94,14 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+
+        // Para salvar um objeto dependente (Payment depende de Order) numa relacao 1 para 1, voce nao chama o repository do objeto dependente
+        o1.setPayment(pay1); // associando Order o1 com Payment pay1
+
+        // pra salvar o pagamento, é só chamar o repository do Order que o JPA salva o pagamento desse pedido
+        orderRepository.save(o1); 
     }
 
 }

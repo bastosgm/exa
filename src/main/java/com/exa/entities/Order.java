@@ -9,6 +9,7 @@ import com.exa.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -47,6 +49,12 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "id.order") // aqui é o mapeamento do atributo order da classe OrderItemPk. id.order é por estar usando um set de OrderItem. com seu getter abaixo, Order reconhece os OrderItems relacionados a ele
     private Set<OrderItem> items = new HashSet<>();
+
+    // aqui é a associacao de um Order com um Payment, que requer seus getters e setters tambem
+    // necessario fazer a assossiacao com payment aqui tambem
+    // nesse caso de 1 para 1, é requerido mesmo id para pedido e pagamento, o que torna obrigatorio o uso de cascade = CascadeType.ALL
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // nome do atributo na classe Payment que faz referencia a Order
+    private Payment payment;
 
     // 3. criar os construtores
     public Order() {
@@ -93,6 +101,14 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Set<OrderItem> getItems() {
