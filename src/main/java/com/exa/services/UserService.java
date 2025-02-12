@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.exa.entities.User;
 import com.exa.repositories.UserRepository;
+import com.exa.services.exceptions.ResourceNotFoundException;
 
 @Service // @Component serviria para registrar a classe como componente do Spring, porem
          // existem os especificos pra services, repositories e etc
@@ -23,7 +24,8 @@ public class UserService {
         // Optional é um container que pode ou nao conter um valor nao nulo
         // retorna um Optional, entao se usa o get pra pegar o objeto
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        // return obj.get(); esse agora da espaço pra um tratamento de excecao
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     // metodo pra inserir um novo usuario no db
