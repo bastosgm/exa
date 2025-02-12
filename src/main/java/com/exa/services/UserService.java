@@ -13,6 +13,8 @@ import com.exa.repositories.UserRepository;
 import com.exa.services.exceptions.DataBaseException;
 import com.exa.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service // @Component serviria para registrar a classe como componente do Spring, porem
          // existem os especificos pra services, repositories e etc
 public class UserService {
@@ -62,14 +64,18 @@ public class UserService {
 
     // metodo pra atualizar um usuario
     public User update(Long id, User obj) {
-        // getReferenceById instancia um objeto provisorio monitorado sem acessar o db
-        User entity = repository.getReferenceById(id);
-
-        // atualiza os dados do entity com os dados do obj
-        updateData(entity, obj);
-
-        // salva o entity atualizado no db
-        return repository.save(entity);
+        try {
+            // getReferenceById instancia um objeto provisorio monitorado sem acessar o db
+            User entity = repository.getReferenceById(id);
+    
+            // atualiza os dados do entity com os dados do obj
+            updateData(entity, obj);
+    
+            // salva o entity atualizado no db
+            return repository.save(entity);         
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User obj) {
