@@ -90,7 +90,7 @@ curl -X GET http://localhost:8080/users/1
 ```
 
 You can find all available routes here:
-- Swagger documentation: http://
+- Swagger documentation: http://localhost:8080/swagger-ui/index.html
 
 ## Contributing
 
