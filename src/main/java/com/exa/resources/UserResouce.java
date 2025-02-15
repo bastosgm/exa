@@ -26,10 +26,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping(value = "/users")
 @Tag(name = "User", description = "User operations")
 public class UserResouce {
+    private static final Logger logger = LoggerFactory.getLogger(UserResouce.class);
+
     // adicionando uma dependencia (injecao de dependencia, que é um objeto
     // UserService que vira automatico) pra UserServices
     // lembrando que pra isso funcionar, essa classe precisa estar registrada como
@@ -64,7 +69,9 @@ public class UserResouce {
     // GET - Controller method
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
+        logger.debug("Request received to get all users");
         List<User> list = service.findAll(); // aqui se usa a dependencia que foi injetada
+        logger.info("Returning all users");
 
         return ResponseEntity.ok().body(list);
     }
@@ -107,6 +114,7 @@ public class UserResouce {
     // GET - Controller Method
     @GetMapping(value = "/{id}") // indica que essa request aceita um parametro na url
     public ResponseEntity<User> findById(@PathVariable Long id) {
+        logger.debug("Request received to get user with ID: {}", id);
         User obj = service.findById(id); // aqui se usa a dependencia que foi injetada
 
         return ResponseEntity.ok().body(obj);
@@ -149,6 +157,7 @@ public class UserResouce {
     // Pra dizer que User obj vai ser um objeto json que vai ser enviado no corpo da
     // requisicao, usa-se o @RequestBody
     public ResponseEntity<User> insert(@RequestBody User obj) {
+        logger.debug("Request received to add a new user");
         obj = service.insert(obj); // aqui se usa a dependencia que foi injetada
         // criando o objeto do tipo URI pra retornar o endereco do novo objeto criado e
         // servir de parametro para created()
@@ -157,6 +166,8 @@ public class UserResouce {
                 .path("/{id}")
                 .buildAndExpand(obj.getId())
                 .toUri();
+
+        logger.info("New user added successfully: {}", obj);
 
         return ResponseEntity.created(uri).body(obj);
     }
@@ -192,7 +203,10 @@ public class UserResouce {
     // DELETE - Controller Method
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+        logger.debug("Request received to delete user with ID: {}", id);
         service.delete(id); // aqui se usa a dependencia que foi injetada
+
+        logger.info("User deleted successfully with ID: {}", id);
 
         // noContent() retorna uma resposta vazia com o codigo 204
         return ResponseEntity.noContent().build();
