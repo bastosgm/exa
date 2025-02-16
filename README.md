@@ -1,4 +1,5 @@
 # EXA - Spring Boot Application with Docker and PostgreSQL
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=bastosgm_exa&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=bastosgm_exa) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bastosgm_exa&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bastosgm_exa) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bastosgm_exa&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bastosgm_exa) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bastosgm_exa&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bastosgm_exa)
 
 This project is a simple application using **Spring Boot**, **PostgreSQL**, and **Docker**. It demonstrates how to create an isolated development environment with Docker, where all the necessary services (backend, database, etc.) are running in containers.
 
