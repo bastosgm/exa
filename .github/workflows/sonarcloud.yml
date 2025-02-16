@@ -27,7 +27,7 @@ jobs:
         run: mvn clean verify
 
       - name: Rodar análise do SonarCloud
-        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.0.4389:sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # "https://sonarcloud.io"
