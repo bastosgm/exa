@@ -99,3 +99,5 @@ Even being as simples as possible, contributions are welcome! If you have any im
 ## License
 
 This project is licensed under the `MIT License`.
+
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=bastosgm_exa)
