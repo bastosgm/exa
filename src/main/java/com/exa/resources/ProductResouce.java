@@ -2,7 +2,6 @@ package com.exa.resources;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +16,11 @@ import com.exa.services.ProductService;
 public class ProductResouce {
     // adicionando uma dependencia (injecao de dependencia, que é um objeto ProductService que vira automatico) pra ProductServices
     // lembrando que pra isso funcionar, essa classe precisa estar registrada como componente do spring lá no ProductService
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public ProductResouce(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<List<Product>> findAll() {

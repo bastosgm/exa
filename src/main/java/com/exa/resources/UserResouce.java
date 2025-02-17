@@ -3,7 +3,6 @@ package com.exa.resources;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +38,11 @@ public class UserResouce {
     // UserService que vira automatico) pra UserServices
     // lembrando que pra isso funcionar, essa classe precisa estar registrada como
     // componente do spring lá no UserService
-    @Autowired
-    private UserService service;
+    private final UserService service;
+
+    public UserResouce(UserService service) {
+        this.service = service;
+    }
 
     // GET - /users
     // GET - Swagger annotations
