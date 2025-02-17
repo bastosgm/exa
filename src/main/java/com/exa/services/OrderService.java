@@ -3,7 +3,6 @@ package com.exa.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.exa.entities.Order;
@@ -12,8 +11,11 @@ import com.exa.services.exceptions.ResourceNotFoundException;
 
 @Service // @Component serviria para registrar a classe como componente do Spring, porem existem os especificos pra services, repositories e etc
 public class OrderService {
-    @Autowired
-    private OrderRepository repository;
+    private final OrderRepository repository;
+
+    public OrderService(OrderRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Order> findAll() {
         return repository.findAll(); // simplesmente repassa a chamada pra camada de repository
