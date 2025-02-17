@@ -30,20 +30,29 @@ import com.exa.repositories.UserRepository;
 public class TestConfig implements CommandLineRunner {
     // injecao de dependencia automatica associando uma instancia de UserReposito
     // aqui no TestConfig
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
     private OrderItemRepository orderItemRepository;
+
+    public TestConfig(
+        UserRepository userRepository, 
+        OrderRepository orderRepository, 
+        CategoryRepository categoryRepository, 
+        ProductRepository productRepository, 
+        OrderItemRepository orderItemRepository
+    ) {
+        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
