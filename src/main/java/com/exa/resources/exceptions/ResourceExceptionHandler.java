@@ -29,7 +29,7 @@ public class ResourceExceptionHandler {
         String error = "Resource not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
 
-        logger.warn("Resource not found exception: " + e.getMessage());
+        logger.warn("Resource not found exception: {}", e.getMessage());
 
         StandardError err = new StandardError(
                 Instant.now(),
@@ -48,7 +48,7 @@ public class ResourceExceptionHandler {
         String error = "Database error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        logger.error("Database exception: " + e.getMessage());
+        logger.error("Database exception: {}", e.getMessage());
 
         StandardError err = new StandardError(
                 Instant.now(),
@@ -67,7 +67,7 @@ public class ResourceExceptionHandler {
         String error = "Internal server error";
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        logger.error("Unexpected internal server error: " + e.getMessage());
+        logger.error("Unexpected internal server error: {}", e.getMessage());
 
         StandardError err = new StandardError(
                 Instant.now(),
