@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.exa.entities.Category;
 import com.exa.repositories.CategoryRepository;
+import com.exa.services.exceptions.ResourceNotFoundException;
 
 @Service // @Component serviria para registrar a classe como componente do Spring, porem existem os especificos pra services, repositories e etc
 public class CategoryService {
@@ -22,6 +23,9 @@ public class CategoryService {
         // Optional é um container que pode ou nao conter um valor nao nulo
         // retorna um Optional, entao se usa o get pra pegar o objeto
         Optional<Category> obj = repository.findById(id); 
+
+        if (obj.isEmpty()) throw new ResourceNotFoundException(id);
+
         return obj.get();
     }
 }

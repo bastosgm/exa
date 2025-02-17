@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.exa.entities.Order;
 import com.exa.repositories.OrderRepository;
+import com.exa.services.exceptions.ResourceNotFoundException;
 
 @Service // @Component serviria para registrar a classe como componente do Spring, porem existem os especificos pra services, repositories e etc
 public class OrderService {
@@ -21,7 +22,10 @@ public class OrderService {
     public Order findById(Long id) {
         // Optional é um container que pode ou nao conter um valor nao nulo
         // retorna um Optional, entao se usa o get pra pegar o objeto
-        Optional<Order> obj = repository.findById(id); 
+        Optional<Order> obj = repository.findById(id);
+        
+        if (obj.isEmpty()) throw new ResourceNotFoundException(id);
+
         return obj.get();
     }
 }
