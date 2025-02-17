@@ -8,6 +8,7 @@ class ExaApplicationTests {
 
 	@Test
 	void contextLoads() {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 }
